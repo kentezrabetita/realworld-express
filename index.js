@@ -1,17 +1,18 @@
-import 'dotenv/config';
-
 import express from 'express';
 import cors from 'cors';
-import database from './config/database';
+import dotenv from 'dotenv';
+import database from './config/database.js';
 
-import userRoutes from './routes/users';
+import userRoutes from './routes/users.js';
+
+dotenv.config({ path: '.env.development' });
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.listen(process.env.PORT, () => {
-  console.log('running on port 3001! 🚀');
+  console.log(`running on port ${process.env.PORT}! 🚀`);
 });
 
 // TEST ROUTE
