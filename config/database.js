@@ -1,8 +1,13 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
 
-const db = new Sequelize("", "", "", {
-  host: "",
-  dialect: "mysql",
-});
+const sequelize = new Sequelize(
+  process.env.PG_DB,
+  process.env.PG_USER,
+  process.env.PG_PASSWORD,
+  {
+    host: process.env.HOST,
+    dialect: 'postgres'
+  }
+);
 
-export default db;
+export default sequelize;
