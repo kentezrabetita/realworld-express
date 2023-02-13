@@ -1,4 +1,4 @@
-import User from "../models/userModel.js";
+import User from '../models/user';
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -13,8 +13,8 @@ export const getUserById = async (req, res) => {
   try {
     const user = await User.findAll({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     });
     res.json(user[0]);
   } catch (error) {
@@ -25,7 +25,7 @@ export const getUserById = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     await User.create(req.body);
-    res.json({ message: "User Created" });
+    res.json({ message: 'User Created' });
   } catch (error) {
     res.json({ message: error.message });
   }
@@ -35,10 +35,10 @@ export const updateUser = async (req, res) => {
   try {
     await User.update(req.body, {
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     });
-    res.json({ message: "User Updated" });
+    res.json({ message: 'User Updated' });
   } catch (error) {
     res.json({ message: error.message });
   }
@@ -48,11 +48,11 @@ export const deleteUser = async (req, res) => {
   try {
     await User.destroy({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     });
     res.json({
-      message: "User Deleted",
+      message: 'User Deleted'
     });
   } catch (error) {
     res.json({ message: error.message });
@@ -64,10 +64,10 @@ export const deleteMultipleUsers = async (req, res) => {
   if (ids == null) {
     try {
       await User.sync({
-        force: true,
+        force: true
       });
       res.json({
-        message: "All Users Deleted",
+        message: 'All Users Deleted'
       });
     } catch (error) {
       res.json({ message: error.message });
@@ -76,10 +76,10 @@ export const deleteMultipleUsers = async (req, res) => {
     try {
       await User.destroy({
         where: {
-          id: ids,
-        },
+          id: ids
+        }
       });
-      res.json({ message: "Multiple Users Deleted" });
+      res.json({ message: 'Multiple Users Deleted' });
     } catch (error) {
       res.json({ message: error.message });
     }
