@@ -1,88 +1,79 @@
-import User from '../models/user.model.js';
 import { Request, Response } from 'express';
+import UserService from '../services/user.service.js';
 
-export const getAllUsers = async (req: Request, res: Response) => {
+export const getAllUsersHandler = async (req: Request, res: Response) => {
   try {
-    const users = await User.findAll();
+    const users = await UserService.getAllUsers();
     res.json(users);
   } catch (error: any) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const getUserById = async (req: Request, res: Response) => {
+export const getUserByIdHandler = async (req: Request, res: Response) => {
   try {
-    const user = await User.findAll({
-      where: {
-        id: req.params.id
-      }
-    });
-    res.json(user[0]);
+    const user = await UserService.getUserById(Number(req.params.id));
+    if (user === null) {
+      res.status(404).json({ message: 'User not found' });
+    } else {
+      res.json(user);
+    }
   } catch (error: any) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUserHandler = async (req: Request, res: Response) => {
   try {
-    await User.create(req.body);
+    await UserService.createUser(req.body);
     res.json({ message: 'User Created' });
   } catch (error: any) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateUserHandler = async (req: Request, res: Response) => {
   try {
-    await User.update(req.body, {
-      where: {
-        id: req.params.id
-      }
-    });
-    res.json({ message: 'User Updated' });
+    const updatedUser = await UserService.updateUser(
+      Number(req.params.id),
+      req.body
+    );
+    if (updatedUser === null) {
+      res.status(404).json({ message: 'User not found' });
+    } else {
+      res.json({ message: 'User Updated' });
+    }
   } catch (error: any) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUserHandler = async (req: Request, res: Response) => {
   try {
-    await User.destroy({
-      where: {
-        id: req.params.id
-      }
-    });
-    res.json({
-      message: 'User Deleted'
-    });
+    const deletedUser = await UserService.deleteUser(Number(req.params.id));
+    if (deletedUser === null) {
+      res.status(404).json({ message: 'User not found' });
+    } else {
+      res.json({ message: 'User Deleted' });
+    }
   } catch (error: any) {
-    res.json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-export const deleteMultipleUsers = async (req: Request, res: Response) => {
+export const deleteMultipleUserHandler = async (
+  req: Request,
+  res: Response
+) => {
   const ids = req.body.list;
-  if (ids == null) {
-    try {
-      await User.sync({
-        force: true
-      });
-      res.json({
-        message: 'All Users Deleted'
-      });
-    } catch (error: any) {
-      res.json({ message: error.message });
-    }
-  } else {
-    try {
-      await User.destroy({
-        where: {
-          id: ids
-        }
-      });
+  try {
+    const deletedUserCount = await UserService.deleteMultipleUser(ids);
+    if (deletedUserCount === true) {
+      res.json({ message: 'All Users Deleted' });
+    } else {
       res.json({ message: 'Multiple Users Deleted' });
-    } catch (error: any) {
-      res.json({ message: error.message });
     }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
