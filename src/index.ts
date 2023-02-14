@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import database from './config/database.js';
 
-import userRoutes from './routes/users.js';
+import userRoutes from './routes/user.route.js';
 
 dotenv.config({ path: '.env.development' });
 
