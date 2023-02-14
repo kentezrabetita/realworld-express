@@ -1,20 +1,20 @@
 import express from 'express';
 import {
-  getAllUsers,
-  createUser,
-  getUserById,
-  updateUser,
-  deleteUser,
-  deleteMultipleUsers
+  getAllUsersHandler,
+  createUserHandler,
+  getUserByIdHandler,
+  updateUserHandler,
+  deleteUserHandler,
+  deleteMultipleUserHandler
 } from '../controllers/user.controller.js';
 
 const router = express.Router();
 
-router.get('/', getAllUsers);
-router.get('/:id', getUserById);
-router.post('/', createUser);
-router.patch('/:id', updateUser);
-router.delete('/:id', deleteUser);
-router.delete('/', deleteMultipleUsers);
+router.get('/', getAllUsersHandler);
+router.get('/:id', getUserByIdHandler);
+router.post('/', createUserHandler);
+router.patch('/:id', updateUserHandler);
+router.delete('/:id', deleteUserHandler);
+router.delete('/', deleteMultipleUserHandler);
 
 export default router;
