@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  loginHandler,
   getAllUsersHandler,
   createUserHandler,
   getUserByIdHandler,
@@ -8,13 +9,17 @@ import {
   deleteMultipleUserHandler
 } from '../controllers/user.js';
 
+import { authenticateToken } from '../middleware/token.js';
+
 const router = express.Router();
 
-router.get('/', getAllUsersHandler);
-router.get('/:id', getUserByIdHandler);
+router.post('/login', loginHandler);
 router.post('/', createUserHandler);
-router.patch('/:id', updateUserHandler);
-router.delete('/:id', deleteUserHandler);
-router.delete('/', deleteMultipleUserHandler);
+
+router.get('/', authenticateToken, getAllUsersHandler);
+router.get('/:id', authenticateToken, getUserByIdHandler);
+router.patch('/:id', authenticateToken, updateUserHandler);
+router.delete('/:id', authenticateToken, deleteUserHandler);
+router.delete('/', authenticateToken, deleteMultipleUserHandler);
 
 export default router;
