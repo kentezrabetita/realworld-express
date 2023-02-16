@@ -1,6 +1,21 @@
 import { Request, Response } from 'express';
 import UserService from '../services/user.js';
 
+export const loginHandler = async (req: Request, res: Response) => {
+  try {
+    const { username, password } = req.body;
+    const token = await UserService.login(username, password);
+
+    if (token === null) {
+      res.status(404).json({ message: 'Invalid Username or Password!' });
+    } else {
+      res.json(token);
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const getAllUsersHandler = async (req: Request, res: Response) => {
   try {
     const users = await UserService.getAllUsers();

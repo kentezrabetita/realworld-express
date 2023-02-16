@@ -1,4 +1,21 @@
+import dotenv from 'dotenv';
 import User from '../models/user.js';
+import jwt from 'jsonwebtoken';
+
+dotenv.config({ path: '.env.development' });
+
+const login = async (username: string, password: string) => {
+  try {
+    if (username !== 'validUsername' || password !== 'validPassword') {
+      return null;
+    }
+    const token = jwt.sign({ username }, String(process.env.JWT_SECRET));
+    return token;
+  } catch (error: any) {
+    console.error('Error generating JWT token:', error);
+    throw new Error(error.message);
+  }
+};
 
 const getAllUsers = async () => {
   try {
@@ -59,6 +76,7 @@ const deleteMultipleUser = async (ids: number[]) => {
 };
 
 const UserService = {
+  login,
   getAllUsers,
   getUserById,
   createUser,
