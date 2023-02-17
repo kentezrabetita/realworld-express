@@ -6,11 +6,10 @@ const login = async (username: string, password: string) => {
     if (username !== 'validUsername' || password !== 'validPassword') {
       return null;
     }
-    const token = generateToken({ username });
+    const token = await generateToken({ username });
     return token;
   } catch (error: any) {
-    console.error('Error generating JWT token:', error);
-    throw new Error(error.message);
+    throw new Error('Error generating JWT token: ', error.message);
   }
 };
 
