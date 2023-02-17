@@ -2,6 +2,8 @@ import User from '../models/user.js';
 import { generateToken, hashPassword } from '../utils/jwt.js';
 
 const login = async (username: string, password: string) => {
+  // TODO check if user exist on database
+  // TODO compare encrypted password
   try {
     if (username !== 'validUsername' || password !== 'validPassword') {
       return null;
@@ -35,6 +37,7 @@ const getUserById = async (id: number) => {
   }
 };
 const createUser = async (userData: any) => {
+  // TODO check if username and email already exist
   try {
     const hashedPassword = await hashPassword(userData.password);
     const updatedUserData = {
