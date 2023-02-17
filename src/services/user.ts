@@ -37,6 +37,7 @@ const getUserById = async (id: number) => {
 };
 const createUser = async (userData: any) => {
   try {
+    // TODO hash user password
     return await User.create(userData);
   } catch (error: any) {
     throw new Error(error.message);
