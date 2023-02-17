@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import db from '../config/database.js';
 
 const Tag = db.define(
-  'Tag',
+  'tag',
   {
     name: {
       type: DataTypes.STRING,
