@@ -1,5 +1,5 @@
 import User from '../models/user.js';
-import { generateToken } from '../utils/jwt.js';
+import { generateToken, hashPassword } from '../utils/jwt.js';
 
 const login = async (username: string, password: string) => {
   try {
@@ -37,8 +37,12 @@ const getUserById = async (id: number) => {
 };
 const createUser = async (userData: any) => {
   try {
-    // TODO hash user password
-    return await User.create(userData);
+    const hashedPassword = await hashPassword(userData.password);
+    const updatedUserData = {
+      ...userData,
+      password: hashedPassword
+    };
+    return await User.create(updatedUserData);
   } catch (error: any) {
     throw new Error(error.message);
   }
