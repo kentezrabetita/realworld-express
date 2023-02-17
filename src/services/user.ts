@@ -1,15 +1,12 @@
-import dotenv from 'dotenv';
 import User from '../models/user.js';
-import jwt from 'jsonwebtoken';
-
-dotenv.config({ path: '.env.development' });
+import { generateToken } from '../utils/jwt.js';
 
 const login = async (username: string, password: string) => {
   try {
     if (username !== 'validUsername' || password !== 'validPassword') {
       return null;
     }
-    const token = jwt.sign({ username }, String(process.env.JWT_SECRET));
+    const token = generateToken({ username });
     return token;
   } catch (error: any) {
     console.error('Error generating JWT token:', error);
