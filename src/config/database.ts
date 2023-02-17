@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env.development' });
-
 import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize(

@@ -1,8 +1,5 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
-
-dotenv.config({ path: '.env.development' });
 
 const DEFAULT_SALT_ROUNDS = 10;
 const TOKEN_EXPIRATION = '8h';
