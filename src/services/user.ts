@@ -1,17 +1,20 @@
 import User from '../models/user.js';
-import { generateToken, hashPassword } from '../utils/jwt.js';
+import { generateToken, hashPassword, comparePassword } from '../utils/jwt.js';
 
 const login = async (username: string, password: string) => {
-  // TODO check if user exist on database
-  // TODO compare encrypted password
-  try {
-    if (username !== 'validUsername' || password !== 'validPassword') {
-      return null;
-    }
+  const user: any = await User.findOne({ where: { username } });
+
+  if (!user) {
+    throw new Error('User does not exist!');
+  }
+
+  const isCorrectPassword = await comparePassword(password, user.password);
+
+  if (isCorrectPassword) {
     const token = await generateToken({ username });
     return token;
-  } catch (error: any) {
-    throw new Error('Error generating JWT token: ', error.message);
+  } else {
+    throw new Error('Error generating JWT token!');
   }
 };
 
