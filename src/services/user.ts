@@ -40,7 +40,19 @@ const getUserById = async (id: number) => {
   }
 };
 const createUser = async (userData: any) => {
-  // TODO check if username and email already exist
+  const { username, email } = userData;
+
+  const emailExist: any = await User.findOne({ where: { email } });
+  const usernameExist: any = await User.findOne({ where: { username } });
+
+  if (emailExist) {
+    throw new Error('Email already exists!');
+  }
+
+  if (usernameExist) {
+    throw new Error('Username already exists!');
+  }
+
   try {
     const hashedPassword = await hashPassword(userData.password);
     const updatedUserData = {
