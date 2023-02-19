@@ -18,3 +18,14 @@ export const hashPassword = async (password: string) => {
   const hashedPassword = await bcrypt.hash(password, DEFAULT_SALT_ROUNDS);
   return hashedPassword;
 };
+
+export const comparePassword = async (
+  hashedPassword: string,
+  userPassword: string
+) => {
+  const isCorrectPassword = await bcrypt.compare(hashedPassword, userPassword);
+  if (!isCorrectPassword) {
+    throw new Error('Invalid password!');
+  }
+  return true;
+};
