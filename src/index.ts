@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import chalk from 'chalk';
 
 import './config/environment.js';
 
@@ -20,13 +21,25 @@ app.use('/users', userRoutes);
 
 try {
   await database.authenticate();
-  console.log('✅ Connection has been established successfully.');
+  console.log(
+    chalk.bgGreen.bold(' [SUCCESS] ') +
+      ' Connection has been established successfully. ✅'
+  );
   await database.sync();
-  console.log('🧬 Database has been synced successfully.');
+  console.log(
+    chalk.bgGreen.bold(' [SUCCESS] ') +
+      ' Database has been synced successfully. 🧬'
+  );
 
   app.listen(process.env.PORT, () => {
-    console.log(`Server is now running on port ${process.env.PORT}! 🚀`);
+    console.log(
+      chalk.bgMagenta.bold(' [RUNNING] ') +
+        ` Server is now running on port ${process.env.PORT}! 🚀`
+    );
   });
 } catch (error) {
-  console.error('Unable to connect to the database:', error);
+  console.error(
+    chalk.bgRed.bold(' [ERROR] ') + ' Unable to connect to the database:',
+    error
+  );
 }
