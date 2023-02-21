@@ -6,6 +6,7 @@ import './config/environment.js';
 
 import database from './config/database.js';
 import userRoutes from './routes/user.js';
+import articleRoutes from './routes/article.js';
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 
 // ROUTES
 app.use('/users', userRoutes);
+app.use('/articles', articleRoutes);
 
 try {
   await database.authenticate();
