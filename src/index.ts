@@ -14,7 +14,7 @@ app.use(express.json());
 
 // TEST ROUTE
 app.get('/', (req, res) => {
-  res.send('Hello World! 🙋🏻');
+  res.send('Hello World Dockered! 🙋🏻 🐳');
 });
 
 // ROUTES
