@@ -1,4 +1,5 @@
 import Article from '../models/article.js';
+import slugify from 'slugify';
 
 // TODO validation
 // TODO article exist check
@@ -25,8 +26,12 @@ const getArticle = async (id: number) => {
 };
 
 const createArticle = async (articleData: any) => {
+  const data = {
+    ...articleData,
+    slug: slugify(articleData.title, { lower: true })
+  };
   try {
-    const article = await Article.create(articleData);
+    const article = await Article.create(data);
     if (!article) throw new Error('Error creating article!');
     return article;
   } catch (error: any) {
