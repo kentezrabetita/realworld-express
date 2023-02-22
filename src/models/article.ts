@@ -11,7 +11,8 @@ const Article = db.define('article', {
     allowNull: false
   },
   description: {
-    type: DataTypes.TEXT
+    type: DataTypes.TEXT,
+    allowNull: false
   },
   body: {
     type: DataTypes.TEXT,
@@ -20,7 +21,3 @@ const Article = db.define('article', {
 });
 
 export default Article;
-
-// Article.beforeValidate((article) => {
-//   article.slug = slugify(article.title, { lower: true }); // ! will require slugify library
-// });
