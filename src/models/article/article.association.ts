@@ -6,8 +6,8 @@ Article.belongsTo(User);
 Article.belongsToMany(Tag, { through: 'ArticleTags' });
 
 Article.belongsToMany(User, {
-  as: 'Favorites',
-  through: 'Favorites',
+  as: 'FavoriteArticle',
+  through: 'FavoriteArticles',
   foreignKey: 'articleId',
   otherKey: 'userId'
 });
