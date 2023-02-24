@@ -1,4 +1,4 @@
-import Article from '../models/article.js';
+import Article from '../models/article/article.model.js';
 import slugify from 'slugify';
 
 // TODO validation

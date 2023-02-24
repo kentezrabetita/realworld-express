@@ -1,4 +1,4 @@
-import User from '../models/user.js';
+import User from '../models/user/user.model.js';
 import { generateToken, hashPassword, comparePassword } from '../utils/jwt.js';
 
 const login = async (username: string, password: string) => {
