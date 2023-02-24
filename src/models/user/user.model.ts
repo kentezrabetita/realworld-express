@@ -1,5 +1,8 @@
 import { DataTypes } from 'sequelize';
 import db from '../../config/database.js';
+import Article from '../article/article.model.js';
+import Comment from '../comment/comment.model.js';
+import { UserAssociation } from './user.association.js';
 
 const User = db.define('user', {
   email: {
@@ -27,5 +30,7 @@ const User = db.define('user', {
     allowNull: true
   }
 });
+
+UserAssociation(Article, User, Comment);
 
 export default User;
