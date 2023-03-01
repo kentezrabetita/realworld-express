@@ -1,34 +1,30 @@
 import { DataTypes } from 'sequelize';
 import db from '../../config/database.js';
 
-export const UserAssociation = (Article: any, User: any, Comment: any) => {
-  const Followers = db.define(
-    'UserFollowUser',
-    {
-      userId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: User,
-          key: 'id'
-        }
-      },
-      followId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: User,
-          key: 'id'
-        }
+export const UserAssociation = (
+  Article: typeof import('../article/article.model').default,
+  User: typeof import('./user.model').default,
+  Comment: typeof import('../comment/comment.model').default
+) => {
+  const Followers = db.define('testfollowers', {
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: User,
+        key: 'id'
       }
     },
-    {
-      tableName: 'UserFollowUser'
+    followId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: User,
+        key: 'id'
+      }
     }
-  );
+  });
 
-  // ! Temporarily comment code that uses the Article and Comment Model
-
-  // User.hasMany(Article);
-  // User.hasMany(Comment);
+  User.hasMany(Article);
+  User.hasMany(Comment);
 
   User.belongsToMany(User, {
     as: 'Followers',
@@ -44,12 +40,12 @@ export const UserAssociation = (Article: any, User: any, Comment: any) => {
     otherKey: 'followerId'
   });
 
-  // User.belongsToMany(Article, {
-  //   as: 'Favorites',
-  //   through: 'Favoriteszxc',
-  //   foreignKey: 'userId',
-  //   otherKey: 'articleId'
-  // });
+  User.belongsToMany(Article, {
+    as: 'Favorites',
+    through: 'testfavorites',
+    foreignKey: 'userId',
+    otherKey: 'articleId'
+  });
 
   Followers.belongsTo(User, { foreignKey: 'userId' });
   User.hasMany(Followers, { foreignKey: 'followId' });
