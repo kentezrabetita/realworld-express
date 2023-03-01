@@ -1,4 +1,5 @@
 import { Model } from 'sequelize';
+import { UserInstance } from '../user/user.type';
 
 interface CommentAttributes {
   body: string;
@@ -6,6 +7,10 @@ interface CommentAttributes {
 
 interface CommentCreationAttributes {}
 
-export interface CommentInstance
+interface CommentModel
   extends Model<CommentAttributes, CommentCreationAttributes>,
-    CommentAttributes {}
+    CommentAttributes {
+  user?: UserInstance;
+}
+
+export interface CommentInstance extends CommentModel {}
