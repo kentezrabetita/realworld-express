@@ -25,8 +25,10 @@ export const UserAssociation = (Article: any, User: any, Comment: any) => {
     }
   );
 
-  User.hasMany(Article);
-  User.hasMany(Comment);
+  // ! Temporarily comment code that uses the Article and Comment Model
+
+  // User.hasMany(Article);
+  // User.hasMany(Comment);
 
   User.belongsToMany(User, {
     as: 'Followers',
@@ -42,12 +44,12 @@ export const UserAssociation = (Article: any, User: any, Comment: any) => {
     otherKey: 'followerId'
   });
 
-  User.belongsToMany(Article, {
-    as: 'Favorites',
-    through: 'Favoriteszxc',
-    foreignKey: 'userId',
-    otherKey: 'articleId'
-  });
+  // User.belongsToMany(Article, {
+  //   as: 'Favorites',
+  //   through: 'Favoriteszxc',
+  //   foreignKey: 'userId',
+  //   otherKey: 'articleId'
+  // });
 
   Followers.belongsTo(User, { foreignKey: 'userId' });
   User.hasMany(Followers, { foreignKey: 'followId' });
